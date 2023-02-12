@@ -13,6 +13,10 @@ project(
 include(cmake/project-is-top-level.cmake)
 include(cmake/variables.cmake)
 
+include(FetchContent)
+FetchContent_Declare(test-lib GIT_REPOSITORY https://github.com/jeffbrn/pkg-test-lib.git GIT_TAG master)
+FetchContent_MakeAvailable(test-lib)
+
 # ---- Declare library ----
 
 add_library(
@@ -37,7 +41,7 @@ set_property(TARGET test-exe_exe PROPERTY OUTPUT_NAME test-exe)
 
 target_compile_features(test-exe_exe PRIVATE cxx_std_17)
 
-target_link_libraries(test-exe_exe PRIVATE test-exe_lib)
+target_link_libraries(test-exe_exe PRIVATE test-exe_lib test-lib::test-lib)
 
 # ---- Install rules ----
 
